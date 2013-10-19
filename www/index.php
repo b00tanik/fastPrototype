@@ -20,8 +20,8 @@ include LIBS.'Exceptions.php';
 
 try{
     $path = pathinfo($_GET['q']);
-    $controllerPath = CONTROLLERS.$path['dirname'].'/'.$path['filename'].'.php';
     $controllerName = ucfirst(strtolower($path['filename']));
+   $controllerPath = CONTROLLERS.$path['dirname'].'/'.$controllerName.'.php';
     $controllerMethod = $path['extension'];
     if(empty($controllerMethod)) $controllerMethod = 'show';
     if(file_exists($controllerPath)){
@@ -41,7 +41,7 @@ try{
                 }
             } else {
                if($controller->getTemplate()===null){
-                   $templatePath = TEMPLATES.$path['dirname'].'/'.$path['filename'].'.'.$path['extension'].'.tpl';
+                   $templatePath = TEMPLATES.$path['dirname'].'/'.$controllerName.'.'.$path['extension'].'.tpl';
                    if(file_exists($templatePath)){
                        include LIBS.'Smarty.php';
                        $smarty = new Smarty();
