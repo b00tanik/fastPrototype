@@ -6,4 +6,4 @@
  */
 
 define ('DEBUG', 1);
-define ('SMARTY_SPL_AUTOLOAD',1);
+

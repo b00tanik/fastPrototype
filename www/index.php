@@ -6,12 +6,13 @@ if(!isset($_GET['q']) || $_GET['q']=='') $_GET['q']='index/Main.show';
 // filename - название контроллера
 // extension - метод контроллера
 
-$includePath = array(LIBS, MODELS, ABSTRACT_LIBS);
-set_include_path(implode($includePath,';'));
-spl_autoload_register(function ($class) {
-    if(!class_exists($class))
-        include $class.'.php';
-});
+$includePath = array(LIBS, MODELS, ABSTRACT_LIBS, SMARTY_MAIN);
+set_include_path(implode($includePath,PATH_SEPARATOR));
+   function autoloadMain($class) {
+      if(!class_exists($class))
+         require $class.'.php';
+   }
+spl_autoload_register('autoloadMain');
 
 
 include CONFIG.'system.php';
@@ -25,7 +26,10 @@ try{
     if(empty($controllerMethod)) $controllerMethod = 'show';
     if(file_exists($controllerPath)){
         include $controllerPath;
-        $controller = new $controllerName;
+       /**
+        * @var $controller Controller
+        */
+       $controller = new $controllerName;
         if(method_exists($controller, $controllerMethod)){
             $ret = $controller->{$controllerMethod}();
             if(!is_array($ret)) $ret = array();
@@ -40,7 +44,6 @@ try{
                    $templatePath = TEMPLATES.$path['dirname'].'/'.$path['filename'].'.'.$path['extension'].'.tpl';
                    if(file_exists($templatePath)){
                        include LIBS.'Smarty.php';
-
                        $smarty = new Smarty();
                        $smarty->caching=false;
                        foreach($ret as $ind=>$val){
@@ -57,7 +60,7 @@ try{
     } else throw new Exception404Error('CORE', $controllerPath);
 
 } catch (Exception $e) {
-    
+
      // TODO: написать класс, который бы занимался оформлением
     if(!DEBUG){
       if($e instanceof Exception404Error){
