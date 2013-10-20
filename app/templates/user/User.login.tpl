@@ -5,6 +5,7 @@
 {/block}
 
 {block name='body'}
+   <h3>Добро пожаловать на темную сторону силы</h3>
     <form action="/user/user.check_login?view=json" method="POST">
         <fieldset>
         <label for="nick">Nick: </label>
@@ -25,7 +26,7 @@
         }
 
         var currSuccessCallback = function () {
-            redirect('/user/user.show');
+            redirect('/');
         }
     </script>
 {/block}

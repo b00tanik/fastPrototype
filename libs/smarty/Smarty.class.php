@@ -228,9 +228,9 @@ class Smarty extends Smarty_Internal_Data
     // start time for execution time calculation
     public $start_time = 0;
     // default file permissions
-    public $_file_perms = 0644;
+    public $_file_perms = 0777;
     // default dir permissions
-    public $_dir_perms = 0771;
+    public $_dir_perms = 0777;
     // block tag hierarchy
     public $_tag_stack = array();
     // flag if {block} tag is compiled for template inheritance

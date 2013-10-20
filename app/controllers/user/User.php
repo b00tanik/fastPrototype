@@ -35,7 +35,7 @@ class User extends Controller {
     public function login(){
         $um = new UserModel();
         if($um->isAuth(false)) {
-            header("Location: /user/user.show");
+            header("Location: /");
         }
     }
 
@@ -102,4 +102,8 @@ class User extends Controller {
 
         return array("errors" => $errors);
     }
+
+   public function top(){
+      return array();
+   }
 }

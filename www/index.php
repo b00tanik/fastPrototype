@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 include 'path.php';
-if(!isset($_GET['q']) || $_GET['q']=='') $_GET['q']='index/Main.show';
+if(!isset($_GET['q']) || $_GET['q']=='') $_GET['q']='food/food.important';
 // dirname показывает папку, куда смотреть в контроллерах
 // filename - название контроллера
 // extension - метод контроллера
@@ -30,6 +30,11 @@ try{
         * @var $controller Controller
         */
        $controller = new $controllerName;
+
+       if($controller instanceof AuthController){
+          $controller->redirectNotAuth();
+       }
+
         if(method_exists($controller, $controllerMethod)){
             $ret = $controller->{$controllerMethod}();
             if(!is_array($ret)) $ret = array();

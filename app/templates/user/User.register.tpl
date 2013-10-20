@@ -5,7 +5,9 @@
 {/block}
 
 {block name='body'}
-    <form action="/user/user.check_register?view=json" method="POST">
+   <h3>Регистрируйся во имя печенек ты.</h3>
+   <small >Обязательны <span style="color: red">ВСЕ</span> поля, юный падаван</small>
+    <form action="/user/user.check_register?view=json" method="POST" style="padding-top: 1em;">
         <fieldset>
 
             <label for="nick">Ник: </label>
