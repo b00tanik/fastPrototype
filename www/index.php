@@ -1,19 +1,10 @@
 <?php
 error_reporting(E_ALL);
 include 'path.php';
-if(!isset($_GET['q']) || $_GET['q']=='') $_GET['q']='food/food.important';
+if(!isset($_GET['q']) || $_GET['q']=='') $_GET['q']='index/Main.show';
 // dirname показывает папку, куда смотреть в контроллерах
 // filename - название контроллера
 // extension - метод контроллера
-
-$includePath = array(LIBS, MODELS, ABSTRACT_LIBS, SMARTY_MAIN);
-set_include_path(implode($includePath,PATH_SEPARATOR));
-   function autoloadMain($class) {
-      if(!class_exists($class))
-         require $class.'.php';
-   }
-spl_autoload_register('autoloadMain');
-
 
 include CONFIG.'system.php';
 include LIBS.'Exceptions.php';
@@ -40,6 +31,7 @@ try{
             if(!is_array($ret)) $ret = array();
             if(isset($_GET['view'])){
                 if($_GET['view']=='json'){
+                    header('Content-Type: application/json');
                     echo json_encode($ret);
                 } elseif($_GET['view']="raw"){
                     // controller manage output itself

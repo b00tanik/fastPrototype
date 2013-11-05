@@ -22,17 +22,30 @@ class ModelMongoDb{
 
     }
 
-    public function findAll(){
+   /**
+    * Find all elements of collection
+    * @return MongoCursor
+    */
+   public function findAll(){
         return $this->collection->find();
     }
 
 
-    public function getAll(){
+   /**
+    * Get array containts all elements of collection
+    * @return array
+    */
+   public function getAll(){
         return iterator_to_array($this->findAll());
     }
 
 
-    public function getById($id){
+   /**
+    * Get Element by mongoId
+    * @param $id
+    * @return array|bool|null
+    */
+   public function getById($id){
         try {
             return $this->collection->findOne(array("_id" => new MongoId($id)));
         } catch(MongoException $e) {
@@ -40,17 +53,34 @@ class ModelMongoDb{
         }
     }
 
-    public function getBy($fields, $val = false){
+
+   /**
+    * Get element by criteria
+    * @param $fields
+    * @param bool $val
+    * @return array
+    */
+   public function getBy($fields, $val = false){
 
         return iterator_to_array($this->findBy($fields, $val));
 
     }
 
-    public function findBy($fields, $val = false){
+   /**
+    * Find Element by criteria
+    * @param $fields
+    * @param bool $val
+    * @return MongoCursor
+    */
+   public function findBy($fields, $val = false){
         if(is_array($fields)) {
             return $this->collection->find($fields);
         } else {
-            return $this->collection->find(array($fields => $val));
+           if(is_array($val)){
+              return $this->collection->find(array($fields=>array('$in' => $val)));
+           } else {
+              return $this->collection->find(array($fields => $val));
+           }
         }
     }
 

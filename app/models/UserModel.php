@@ -1,7 +1,5 @@
 <?php
 
-
-
 class UserModel extends ModelMongoDb {
 
     protected $collectionName="users";

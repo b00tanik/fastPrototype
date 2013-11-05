@@ -18,28 +18,15 @@
 <header>
       <div class="navbar navbar-fixed-top" >
          <div class="navbar-inner">
-            <div class="container"  style="background-color: #004931">
+            <div class="container"  style="background-color: GrayText">
 
-               <a class="brand" href="/"><img src="/img/cookies.png" /></a>
                <div class="nav-collapse collapse">
                   <ul class="nav">
-                     <li {if $smarty.get.q|strstr:"important"}class="active"{/if}>
-                        <a href="/food/food.important">Важное</a>
+                     <li {if $smarty.get.q|strstr:"analyze/analyze"}class="active"{/if}>
+                        <a href="/analyze/analyze.show">Анализ</a>
                      </li>
-                     <li {if $smarty.get.cat|strstr:"coockie"}class="active"{/if}>
-                        <a  href="/food/food.get?cat=cookie">Печеньки</a>
-                     </li>
-                     <li  {if $smarty.get.cat|strstr:"drink"}class="active"{/if}>
-                        <a href="/food/food.get?cat=drink">Напитки</a>
-                     </li>
-                     <li  {if $smarty.get.cat|strstr:"office"}class="active"{/if}>
-                        <a href="/food/food.get?cat=office">Канцелярия</a>
-                     </li>
-                     <li {if $smarty.get.cat|strstr:"other"}class="active"{/if}>
-                        <a href="/food/food.get?cat=other">Все остальное</a>
-                     </li>
-                     <li  {if $smarty.get.q|strstr:"user.top"}class="active"{/if}>
-                        <a href="/user/user.top">Герои</a>
+                     <li {if $smarty.get.q|strstr:"schedule/task"}class="active"{/if}>
+                        <a href="/schedule/task.summary">Задачи</a>
                      </li>
                   </ul>
                </div>
@@ -58,14 +45,9 @@
 
 
          </div>
-
-
-
-
-
 </header>
 
-<div class="container" style="padding-top: 200px">
+<div class="container" style="padding-top: 140px">
 
         <div class="row">
 {block name=body}{/block}

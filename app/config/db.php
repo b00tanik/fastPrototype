@@ -6,4 +6,4 @@
  */
 
 define("MONGO_HOST", 'localhost');
-define("MONGO_DB", 'coockies');
+define("MONGO_DB", 'svm');

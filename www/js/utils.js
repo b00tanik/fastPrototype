@@ -104,3 +104,20 @@ function _confirm(options) {
 
     return $deferred.promise();
 }
+
+function generateFormFields(data){
+   var html = '';
+   for (var key in data){
+      if(data[key]['label']){
+         html+='<label>'+data[key]['label']+'</label>'
+      }
+      if(data[key]['options']){
+         html+='<select name="params['+key+']">';
+         for (var val in data[key]['options']){
+            html+='<option value="'+val+'">'+data[key]['options'][val]+'</option>'
+         }
+         html+='</select>';
+      }
+   }
+   return html;
+}

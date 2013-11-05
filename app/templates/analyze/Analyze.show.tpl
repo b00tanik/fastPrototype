@@ -5,5 +5,8 @@
 {/block}
 
 {block name='body'}
-   show system status
+  Analyze form
+{/block}
+{block name="add_js"}
+
 {/block}

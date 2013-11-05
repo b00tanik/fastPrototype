@@ -11,7 +11,6 @@ class Post extends Controller {
 
     public function write(){
         $this->redirectNotAuth();
-
     }
 
     public function check_write(){
