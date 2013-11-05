@@ -4,9 +4,9 @@
  * Date: 05.11.13
  */
 
-class MngCliScheduler extends Sheduler {
+class CliMongoScheduler extends Scheduler {
 
-   protected $maxWorkersCount = 1;
+   protected $maxWorkersCount = 16;
    protected $idFieldName = '_id';
 
    public function getCurrentTasks($status = array(self::TASK_STATUS_STARTED), $limit = null, $offset = null) {
@@ -28,24 +28,30 @@ class MngCliScheduler extends Sheduler {
          $sm->insert($newFields);
       }
       else {
-         $sm->set(new MongoId($taskId), $newFields);
+         if (!($taskId instanceof MongoId)) {
+            $taskId = new MongoId($taskId);
+         }
+         $sm->set($taskId, $newFields);
       }
    }
 
    public function getTask($taskId) {
       $sm = new MngShedulerModel();
-      return $sm->getById(new MongoId($taskId));
+      if (!($taskId instanceof MongoId)) {
+         $taskId = new MongoId($taskId);
+      }
+      return $sm->getById($taskId);
    }
 
-   public function startTask($taskId){
+   public function startTask($taskId) {
       parent::startTask($taskId);
-      $cmd = 'php '.CLI.'start_task.php -i='.$taskId;
+      $cmd = 'php ' . CLI . 'start_task.php -i=' . $taskId;
       self::execInBackground($cmd);
    }
 
    public static function execInBackground($cmd) {
-      if (substr(php_uname(), 0, 7) == "Windows"){
-         pclose(popen("start /B ". $cmd.' > log.htm', "r"));
+      if (substr(php_uname(), 0, 7) == "Windows") {
+         pclose(popen("start /B " . $cmd , "r"));
       }
       else {
          exec($cmd . " > /dev/null &");

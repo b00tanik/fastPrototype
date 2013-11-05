@@ -15,6 +15,6 @@ class AnalyzeNegFile implements  ITask {
 
    public function start($info) {
       $analyzer = new AnalyzerModel();
-      $analyzer->store($info['params']['filename'], 'neg');
+      $analyzer->store($info['params']['filename'], 'neg', $info['_id']);
    }
 }

@@ -18,14 +18,43 @@ class RefreshAnalyzeData implements  ITask {
       ), 'label'=>'Тональность'));
    }
 
-   public function start($info) {
-      // добавляем таски в шедулер
-      // Обновляем шедулер
-      // добавляем к детям свой parent_id
-   }
+   public function start($info ) {
+      $sm = new CliMongoScheduler();
+      $am = new AnalyzerModel();
+      // Чистим
+      $params = $info['params'];
+      $all = ($params['tones']=='all');
+      if($params['type']=='rewrite'){
+         if($params['tones']=='pos' || $all){
+            $am->clear('pos');
+         }
+         if($params['tones']=='neg' || $all){
+            $am->clear('neg');
+         }
+      }
+      $sm->setTaskProgress($info['_id'], 30);
 
-   public function wakeup(){
-      // Проверяем - все ли наши таски завершены
-      // Производим финальные подсчеты
+      // Устанавливаем таски
+      if($params['tones']=='pos' || $all){
+         foreach($am->getFileList('pos') as $file){
+            if(!$am->isStored($file, 'pos')){
+               $sm->addTask('AnalyzePosFile', array(
+                  'filename'=>$file
+               ));
+            }
+         }
+      }
+      $sm->setTaskProgress($info['_id'], 70);
+
+      if($params['tones']=='neg' || $all){
+         foreach($am->getFileList('neg') as $file){
+            if(!$am->isStored($file, 'neg')){
+               $sm->addTask('AnalyzeNegFile', array(
+                  'filename'=>$file
+               ));
+            }
+         }
+      }
+      $sm->setTaskProgress($info['_id'], 100);
    }
 }

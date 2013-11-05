@@ -16,6 +16,6 @@ class AnalyzePosFile implements  ITask {
    public function start($info) {
       // Проводим анализ текста
       $analyzer = new AnalyzerModel();
-      $analyzer->store($info['params']['filename'], 'pos');
+      $analyzer->store($info['params']['filename'], 'pos', $info['_id']);
    }
 }
