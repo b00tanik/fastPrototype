@@ -12,6 +12,12 @@ class AnalyzerModel extends ModelMongoDb {
       return !empty($file);
    }
 
+   /**
+    * Предварительное хранение данных, полученных в результате анализа
+    * @param $filename
+    * @param $tone
+    * @param $taskId
+    */
    public function store($filename, $tone, $taskId) {
       $sm = new CliMongoScheduler();
       // Все это ради нормальной поддержки UTF-8
@@ -69,10 +75,19 @@ class AnalyzerModel extends ModelMongoDb {
       $this->remove(array('tone'=>$tone));
    }
 
+   /**
+    * Анализ конечного текста
+    * @param $text
+    */
    public function analyze($text) {
 
    }
 
+   /**
+    * Объединение основной оценки и оценки, полученной в результате анализа.
+    * @param $filename
+    * @param $tone
+    */
    public function mergeValues($filename, $tone){
       // для рассинхронизации
       while($this->isLockedMerge()){
