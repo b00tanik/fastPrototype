@@ -3,7 +3,7 @@
 <head>
     <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon"/>
 
-    <title>{block name=title}Cookies{/block}</title>
+    <title>{block name=title}FastPrototype{/block}</title>
     <script src="/js/jquery.min.js" type="text/javascript"></script>
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="all" />
     <link href="/css/main.css" rel="stylesheet" media="all" />
