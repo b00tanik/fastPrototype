@@ -5,15 +5,30 @@
 {/block}
 
 {block name='body' prepend}
+   {$isEdit=isset($smarty.get.id)}
    <div class="span12">
-      <h4>Добавить новый запрос</h4>
       <form action="/food/adminfood.check_edit?view=json" method="POST">
          <fieldset>
-            <legend>Название</legend>
-            <input class="span12" type="text" name="title"/>
+            <legend>Добавить новый запрос</legend>
 
-            <legend>Тип</legend>
-            <input class="span12" type="text" name="title"/>
+            <label>Название</label>
+            <input class="span12" type="text" name="title"
+                  {if $isEdit}value="{$food.title}"{/if}/>
+
+            <label>Тип</label>
+            <select name="type" id="type">
+               {$localizedTypes = FoodModel::getLocalizedTypes()}
+               {foreach FoodModel::getTypes() as $key=>$type}
+                  <option value="{$type}"
+                          {if $isEdit && $food.type==$type}selected="selected" {/if}
+                        >{$localizedTypes.$key}</option>
+                  {$type}
+               {/foreach}
+            </select>
+            <label>Описание (не более 300 символов)</label>
+            <textarea class="span12" name="text" id="" cols="30" rows="10">
+               {if $isEdit}{$food.description}{/if}
+            </textarea>
 
 
             <p>
@@ -29,7 +44,7 @@
       }
 
       var currSuccessCallback = function (data) {
-         // redirect('/post/post.edit?post='+data.edit_id);
+          redirect('/food/adminfood.edit?id='+data.edit_id);
       }
    </script>
 {/block}
